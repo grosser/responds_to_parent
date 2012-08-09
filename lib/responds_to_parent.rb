@@ -1,16 +1,7 @@
 require 'responds_to_parent/action_controller'
 require 'responds_to_parent/selector_assertion'
 
-module ActionController
-  class Base
-    include RespondsToParent::ActionController
-  end
-end
+ActionController::Base.send :include, RespondsToParent::ActionController
 
-module ActionController
-  module Assertions
-    module SelectorAssertions
-      include RespondsToParent::SelectorAssertion
-    end
-  end
-end
+base = defined?(ActionDispatch) ? ActionDispatch::Assertions::SelectorAssertions : ActionController::Assertions::SelectorAssertions
+base.send :include, RespondsToParent::SelectorAssertion
