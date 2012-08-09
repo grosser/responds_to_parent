@@ -1,10 +1,15 @@
+require 'appraisal'
 require 'rake'
 require 'rake/testtask'
 require 'rake/rdoctask'
 require 'bundler/gem_tasks'
 
+task :default do
+  sh "bundle exec rake appraisal:install && bundle exec rake appraisal test"
+end
+
 desc 'Test the responds_to_parent plugin.'
-Rake::TestTask.new :default do |t|
+Rake::TestTask.new do |t|
   t.libs << 'lib'
   t.pattern = 'test/**/*_test.rb'
   t.verbose = true
