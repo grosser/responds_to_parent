@@ -3,5 +3,9 @@ require 'responds_to_parent/selector_assertion'
 
 ActionController::Base.send :include, RespondsToParent::ActionController
 
-base = defined?(ActionDispatch) ? ActionDispatch::Assertions::SelectorAssertions : ActionController::Assertions::SelectorAssertions
+base = if ActionPack::VERSION::MAJOR >= 3
+  ActionDispatch::Assertions::SelectorAssertions
+else
+  ActionController::Assertions::SelectorAssertions
+end
 base.send :include, RespondsToParent::SelectorAssertion
